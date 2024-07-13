@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{titleAction}} Libro</h2>
+<mat-dialog-content>
+  ¿Desea eliminar este libro: {{bookData.title}}?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>No</button>
+  <button mat-flat-button
+  (click)="confirmDelete()" cdkFocusInitial>
+    Si
+  </button>
+</mat-dialog-actions>

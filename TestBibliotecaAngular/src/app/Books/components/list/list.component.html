@@ -2,7 +2,7 @@
 <div style="width: 70%; margin: 40px auto">
 
   <h1> Administracion de Biblioteca</h1>
-  <button mat-flat-button (click)="openDialog()">Open dialog</button>
+  <button mat-flat-button (click)="newBook()">Agregar Libro</button>
   <mat-form-field>
     <mat-label>Filtrar</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
@@ -40,15 +40,18 @@
         <th mat-header-cell *matHeaderCellDef style="width: 200px;"></th>
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button class="red-icon"
-            matTooltip="Eliminar un libro">
+            matTooltip="Eliminar un libro"
+            (click)="deleteBook(element)">
             <mat-icon>delete_forever</mat-icon>
           </button>
           <button mat-icon-button class="warm-icon"
-            matTooltip="Prestar un libro">
+            matTooltip="Prestar un libro"
+            (click)="lendBook(element)">
             <mat-icon>assignment_return</mat-icon>
           </button>
           <button mat-icon-button class="primary-icon"
-            matTooltip="Devolver un libro">
+            matTooltip="Devolver un libro"
+            (click)="returnBook(element)">
             <mat-icon>assignment_returned</mat-icon>
           </button>
         </td>

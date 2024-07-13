@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MaterialModule } from './material/material.module';
-import { ListBooksComponent } from './Books/components/list/list.component';
 import { BooksModule } from './Books/books.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,7 @@ import { BooksModule } from './Books/books.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     MaterialModule,
     BooksModule
   ],
