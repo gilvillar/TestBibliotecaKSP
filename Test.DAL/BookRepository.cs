@@ -91,19 +91,19 @@ namespace Test.DAL
                             Id = 1,
                             Title="Caballo de Troya",
                             Author = "JJ. Benitez",
-                             IsFree = true
+                            Stock = 5
                         },
                         new Book {
                             Id = 2,
                             Title = "Azteca",
                             Author ="Gary Jennings",
-                            IsFree = true
+                            Stock = 6
                         },
                         new Book {
                             Id = 3,
                             Title = "El Psicoanalista",
                             Author="John Katzenbach",
-                            IsFree=false
+                            Stock=4
                         }
                     };
 

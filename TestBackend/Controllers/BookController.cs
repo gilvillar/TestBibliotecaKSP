@@ -47,29 +47,9 @@ namespace TestBackend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> LendBook(int id, Book book)
+        public async Task<IActionResult> UpdateBook(int id, Book book)
         {
             
-            if (id != book.Id)
-            {
-                return BadRequest();
-            }
-
-            var result = await _bookService.UpdateBook(book);
-            if (result)
-            {
-                return NoContent();
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPut("{id}/return")]
-        public async Task<IActionResult> ReturnBook(int id, Book book)
-        {
-
             if (id != book.Id)
             {
                 return BadRequest();
