@@ -91,19 +91,25 @@ namespace Test.DAL
                             Id = 1,
                             Title="Caballo de Troya",
                             Author = "JJ. Benitez",
-                            Stock = 5
+                            Stock = 5,
+                            LentBooks=0,
+                            Available=5
                         },
                         new Book {
                             Id = 2,
                             Title = "Azteca",
                             Author ="Gary Jennings",
-                            Stock = 6
+                            Stock = 6,
+                            LentBooks=0,
+                            Available=6
                         },
                         new Book {
                             Id = 3,
                             Title = "El Psicoanalista",
                             Author="John Katzenbach",
-                            Stock=4
+                            Stock=4,
+                            LentBooks=0,
+                            Available=4
                         }
                     };
 

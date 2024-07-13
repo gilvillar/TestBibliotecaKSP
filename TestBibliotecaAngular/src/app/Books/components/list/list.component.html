@@ -1,7 +1,7 @@
 
 <div style="width: 70%; margin: 40px auto">
 
-  <h1> Administracion de Biblioteca</h1>
+  <h2> Administracion de Biblioteca</h2>
   <button mat-flat-button (click)="newBook()">Agregar Libro</button>
   <mat-form-field>
     <mat-label>Filtrar</mat-label>
@@ -25,14 +25,26 @@
 
       <!-- Autor Column -->
       <ng-container matColumnDef="Autor">
-        <th mat-header-cell *matHeaderCellDef> Autor </th>
-        <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width" class="custom-column-width"> Autor </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width" class="custom-column-width"> {{element.author}} </td>
       </ng-container>
 
       <!-- Stock Column -->
       <ng-container matColumnDef="Stock">
-        <th mat-header-cell *matHeaderCellDef> Stock </th>
-        <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width" class="custom-column-width"> Stock </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width" class="custom-column-width"> {{element.stock}} </td>
+      </ng-container>
+
+      <!-- Prestados Column -->
+      <ng-container matColumnDef="Prestados">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width"> Prestados </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width"> {{element.lentBooks}} </td>
+      </ng-container>
+
+       <!-- Disponibles Column -->
+      <ng-container matColumnDef="Disponibles">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width"> Disponibles </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width"> {{element.available}} </td>
       </ng-container>
 
 

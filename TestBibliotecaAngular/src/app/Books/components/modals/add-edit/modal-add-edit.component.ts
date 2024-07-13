@@ -27,9 +27,12 @@ export class ModalAddEditComponent {
     @Inject(MAT_DIALOG_DATA)public dataBook:Book
   ) {
     this.formBook = this.fb.group({
+      id: [0],
       title: ['',Validators.required],
       author: ['',Validators.required],
-      stock: [0,Validators.required]
+      stock: [0,Validators.required],
+      lentBooks:[0],
+      available:[0]
     });
   }
 
@@ -39,7 +42,9 @@ export class ModalAddEditComponent {
         id: this.dataBook.id,
         title: this.dataBook.title,
         author: this.dataBook.author,
-        stock: this.dataBook.stock
+        stock: this.dataBook.stock,
+        lentBooks:this.dataBook.lentBooks,
+        available:this.dataBook.available,
       });
 
       this.titleAction= 'Editar';
@@ -59,7 +64,9 @@ export class ModalAddEditComponent {
       id: 0,
       title: this.formBook.value.title,
       author: this.formBook.value.author,
-      stock: this.formBook.value.stock
+      stock: this.formBook.value.stock,
+      lentBooks: this.formBook.value.lentBooks,
+      available: this.formBook.value.stock - this.formBook.value.lentBooks
     };
 
     if(this.dataBook==null){
@@ -74,16 +81,22 @@ export class ModalAddEditComponent {
       })
     }
     else{
-      book.id = this.dataBook.id;
-      this.bookService.updateItem(book.id,book).subscribe({
-        next:(data)=>{
-          this.mostrarAlerta('El libro fue modificado','Ok');
-          this.dialogReference.close('editado');
-        },
-        error:(e)=>{
-          this.mostrarAlerta('No se pudo editar','Error');
-        }
-      })
+      if(book.stock==0 && book.lentBooks>0){
+        this.mostrarAlerta('El stock no puede ser 0 por que hay libros prestados','Error');
+      }
+      else{
+        book.id = this.dataBook.id;
+
+        this.bookService.updateItem(book.id,book).subscribe({
+          next:(data)=>{
+            this.mostrarAlerta('El libro fue modificado','Ok');
+            this.dialogReference.close('editado');
+          },
+          error:(e)=>{
+            this.mostrarAlerta('No se pudo editar','Error');
+          }
+        });
+      }
     }
   }
 }

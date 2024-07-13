@@ -17,7 +17,7 @@ import { ModalReturnComponent } from '../modals/return/return.component';
   styleUrl: './list.component.css'
 })
 export class ListBooksComponent implements AfterViewInit, OnInit{
-  displayedColumns: string[] = ['Id', 'Titulo', 'Autor', 'Stock','Acciones'];
+  displayedColumns: string[] = ['Id', 'Titulo', 'Autor', 'Stock','Prestados','Disponibles','Acciones'];
   dataSource = new MatTableDataSource<Book>();
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -107,14 +107,15 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
   }
 
   lendBook(book:Book):void{
-    if(book.stock>0){
+    if(book.available>0){
       this.dialog.open(ModalLendComponent,
       {
         disableClose:true,
         data: book
       }).afterClosed().subscribe(resultado =>{
         if(resultado ==='prestar'){
-          book.stock-=1;
+          book.lentBooks+=1;
+          book.available-=1;
           this.service.updateItem(book.id, book).subscribe({
             next:(data)=>{
               this.mostrarAlerta('El libro fue prestado','Ok');
@@ -128,19 +129,21 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
       });
     }
     else{
-      this.mostrarAlerta('No hay libros en stock','Error');
+      this.mostrarAlerta('No hay libros disponibles','Error');
     }
 
   }
 
   returnBook(book:Book):void{
-    this.dialog.open(ModalReturnComponent,
+    if(book.lentBooks>0){
+      this.dialog.open(ModalReturnComponent,
       {
         disableClose:true,
         data: book
       }).afterClosed().subscribe(resultado =>{
         if(resultado ==='devolver'){
-          book.stock+=1;
+          book.available+=1;
+          book.lentBooks-=1;
           this.service.updateItem(book.id, book).subscribe({
             next:(data)=>{
               this.mostrarAlerta('El libro fue devuelto','Ok');
@@ -151,7 +154,12 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
             }
           })
         }
-      })
+      });
+    }
+    else{
+      this.mostrarAlerta('No hay libros prestados','Error');
+    }
+
   }
 
   mostrarAlerta(message: string, action: string) {
