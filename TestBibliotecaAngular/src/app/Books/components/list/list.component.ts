@@ -81,23 +81,29 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
   }
 
   deleteBook(book: Book):void{
-    this.dialog.open(ModalDeleteComponent,
-      {
-        disableClose:true,
-        data: book
-      }).afterClosed().subscribe(resultado =>{
-        if(resultado ==='eliminar'){
-          this.service.deleteItems(book.id).subscribe({
-            next:(data)=>{
-              this.mostrarAlerta('El libro fue eliminado','Ok');
-              this.listBooks();
-            },
-            error:(e)=>{
-              this.mostrarAlerta('No se pudo crear','Error');
-            }
-          })
-        }
-      })
+    if(book.stock==0)
+    {
+      this.dialog.open(ModalDeleteComponent,
+        {
+          disableClose:true,
+          data: book
+        }).afterClosed().subscribe(resultado =>{
+          if(resultado ==='eliminar'){
+            this.service.deleteItems(book.id).subscribe({
+              next:(data)=>{
+                this.mostrarAlerta('El libro fue eliminado','Ok');
+                this.listBooks();
+              },
+              error:(e)=>{
+                this.mostrarAlerta('No se pudo crear','Error');
+              }
+            })
+          }
+        })
+    }
+    else{
+      this.mostrarAlerta('No se puede eliminar un libro con Stock','Error');
+    }
   }
 
   lendBook(book:Book):void{
