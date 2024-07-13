@@ -1,6 +1,5 @@
 import { Component,Inject,OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { BooksApiService } from '../../../services/books.service';
 import { Book } from '../../../interfaces/book.interface';
 
 @Component({
@@ -13,7 +12,6 @@ export class ModalDeleteComponent {
 
   constructor(
     private dialogReference: MatDialogRef<ModalDeleteComponent>,
-    private bookService: BooksApiService,
     @Inject(MAT_DIALOG_DATA) public bookData: Book
   ){}
 
