@@ -15,7 +15,9 @@
       </mat-form-field>
     </mat-grid-tile>
       <mat-grid-tile>
-        <mat-slide-toggle formControlName="isFree">Esta disponible</mat-slide-toggle>
+        <mat-form-field>
+          <input matInput type="number" formControlName="stock" autocomplete="off">
+        </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
   </form>

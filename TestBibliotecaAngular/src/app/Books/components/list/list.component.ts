@@ -17,8 +17,7 @@ import { ModalReturnComponent } from '../modals/return/return.component';
   styleUrl: './list.component.css'
 })
 export class ListBooksComponent implements AfterViewInit, OnInit{
-  displayedColumns: string[] = ['Id', 'Titulo', 'Autor', 'Disponible','Acciones'];
-  listado: Book[] = [];
+  displayedColumns: string[] = ['Id', 'Titulo', 'Autor', 'Stock','Acciones'];
   dataSource = new MatTableDataSource<Book>();
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -53,13 +52,31 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
     });
   }
 
+  editBook(book: Book){
+    const dialogRef = this.dialog.open(ModalAddEditComponent,
+      {
+        disableClose:true,
+        width:'450px',
+        data: book
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'editado'){
+        this.listBooks();
+      }
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   listBooks(){
     this.service.getItems().subscribe({
       next:(dataResponse) =>{
         console.log(dataResponse);
         this.dataSource.data = dataResponse;
       },
-      error:(e)=>{}
+      error:(e)=>{
+        this.mostrarAlerta('Sin datos','Error');
+      }
     });
   }
 
@@ -84,13 +101,14 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
   }
 
   lendBook(book:Book):void{
-    this.dialog.open(ModalLendComponent,
+    if(book.stock>0){
+      this.dialog.open(ModalLendComponent,
       {
         disableClose:true,
         data: book
       }).afterClosed().subscribe(resultado =>{
         if(resultado ==='prestar'){
-          book.isFree=false;
+          book.stock-=1;
           this.service.updateItem(book.id, book).subscribe({
             next:(data)=>{
               this.mostrarAlerta('El libro fue prestado','Ok');
@@ -101,7 +119,12 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
             }
           })
         }
-      })
+      });
+    }
+    else{
+      this.mostrarAlerta('No hay libros en stock','Error');
+    }
+
   }
 
   returnBook(book:Book):void{
@@ -111,7 +134,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
         data: book
       }).afterClosed().subscribe(resultado =>{
         if(resultado ==='devolver'){
-          book.isFree=true;
+          book.stock+=1;
           this.service.updateItem(book.id, book).subscribe({
             next:(data)=>{
               this.mostrarAlerta('El libro fue devuelto','Ok');

@@ -27,6 +27,10 @@ td, th {
   color: rgb(6, 89, 223);
 }
 
+.success-icon {
+  color: rgba(10, 103, 24, 0.949);
+}
+
 .custom-column-width {
   width: 150px; /* Ajusta este valor según tus necesidades */
 }

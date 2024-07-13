@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Book } from '../../../interfaces/book.interface';
 import { BooksApiService } from '../../../services/books.service';
@@ -23,15 +23,28 @@ export class ModalAddEditComponent {
     private dialogReference: MatDialogRef<ModalAddEditComponent>,
     private fb:FormBuilder,
     private _snackBar: MatSnackBar,
-    private bookService: BooksApiService
+    private bookService: BooksApiService,
+    @Inject(MAT_DIALOG_DATA)public dataBook:Book
   ) {
     this.formBook = this.fb.group({
       title: ['',Validators.required],
       author: ['',Validators.required],
-      isFree: [true]
+      stock: [0,Validators.required]
     });
   }
 
+  ngOnInit():void{
+    if(this.dataBook){
+      this.formBook.patchValue({
+        id: this.dataBook.id,
+        title: this.dataBook.title,
+        author: this.dataBook.author,
+        stock: this.dataBook.stock
+      });
+
+      this.titleAction= 'Editar';
+    }
+  }
 
   mostrarAlerta(message: string, action: string) {
     this._snackBar.open(message, action,{
@@ -46,17 +59,31 @@ export class ModalAddEditComponent {
       id: 0,
       title: this.formBook.value.title,
       author: this.formBook.value.author,
-      isFree: this.formBook.value.isFree
-    }
+      stock: this.formBook.value.stock
+    };
 
-    this.bookService.addItems(book).subscribe({
-      next:(data)=>{
-        this.mostrarAlerta('El libro fue creado','Ok');
-        this.dialogReference.close('creado');
-      },
-      error:(e)=>{
-        this.mostrarAlerta('No se pudo crear','Error');
-      }
-    })
+    if(this.dataBook==null){
+      this.bookService.addItems(book).subscribe({
+        next:(data)=>{
+          this.mostrarAlerta('El libro fue creado','Ok');
+          this.dialogReference.close('creado');
+        },
+        error:(e)=>{
+          this.mostrarAlerta('No se pudo crear','Error');
+        }
+      })
+    }
+    else{
+      book.id = this.dataBook.id;
+      this.bookService.updateItem(book.id,book).subscribe({
+        next:(data)=>{
+          this.mostrarAlerta('El libro fue modificado','Ok');
+          this.dialogReference.close('editado');
+        },
+        error:(e)=>{
+          this.mostrarAlerta('No se pudo editar','Error');
+        }
+      })
+    }
   }
 }
