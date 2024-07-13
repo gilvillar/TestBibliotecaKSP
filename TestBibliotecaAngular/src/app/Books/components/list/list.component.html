@@ -1,8 +1,9 @@
 
-<div style="width: 70%; margin: 40px auto">
+<div style="width: 90%; margin: 40px auto">
 
   <h2> Administracion de Biblioteca</h2>
   <button mat-flat-button (click)="newBook()">Agregar Libro</button>
+  <hr>
   <mat-form-field>
     <mat-label>Filtrar</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="" #input>

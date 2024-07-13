@@ -12,7 +12,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   exports: [
@@ -28,7 +29,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSortModule,
     MatIconModule,
     MatGridListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSidenavModule,
+    MatToolbarModule
   ]
 })
 export class MaterialModule { }
