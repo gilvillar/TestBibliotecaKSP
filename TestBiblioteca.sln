@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.IoC", "Test.IoC\Test.I
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TestBibliotecaAngular", "TestBibliotecaAngular\TestBibliotecaAngular.esproj", "{586BB6FD-16EF-4A58-9AC6-03701232C168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBibliotecaUnitTesting", "TestBibliotecaUnitTesting\TestBibliotecaUnitTesting.csproj", "{7C8E72EF-5AFC-4689-B095-AEADB4C69267}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Release|Any CPU.Build.0 = Release|Any CPU
 		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

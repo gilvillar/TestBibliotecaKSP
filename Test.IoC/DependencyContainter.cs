@@ -8,8 +8,9 @@ namespace Test.IoC
     {
         public static IServiceCollection BookManagerService(this IServiceCollection services) 
         {
-            services.AddScoped<BookService>();
+            //services.AddScoped<BookService>();
             services.AddRepository();
+            services.AddBookService();
 
             return services;
         }

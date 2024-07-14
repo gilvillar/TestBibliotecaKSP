@@ -3,7 +3,7 @@ using Test.Entities;
 
 namespace Test.BLL
 {
-    public class BookService
+    public class BookService : IBookService
     {
         readonly IBookRepository _bookRepository;
         private readonly ILogger<IBookRepository> _logger;

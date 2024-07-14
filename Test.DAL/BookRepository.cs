@@ -3,7 +3,7 @@ using Test.Entities;
 
 namespace Test.DAL
 {
-    internal class BookRepository : IBookRepository
+    public class BookRepository : IBookRepository
     {
         public BookRepository()
         {

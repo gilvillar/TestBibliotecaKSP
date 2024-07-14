@@ -9,9 +9,9 @@ namespace TestBackend.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        readonly BookService _bookService;
+        readonly IBookService _bookService;
 
-        public BookController(BookService bookService)
+        public BookController(IBookService bookService)
         {
             _bookService = bookService;
         }
