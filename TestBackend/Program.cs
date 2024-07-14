@@ -1,7 +1,15 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 using Test.IoC;
 using TestBackend.Middleware;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
+using TestBackend.Services;
+
 
 namespace TestBackend
 {
@@ -9,6 +17,7 @@ namespace TestBackend
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Configurar Serilog
@@ -19,7 +28,7 @@ namespace TestBackend
             builder.Host.UseSerilog();
 
             // Add services to the container.
-            builder.Services.BookManagerService();
+            builder.Services.ManagerService();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,6 +43,30 @@ namespace TestBackend
                     .AllowAnyHeader()
                 );
             });
+
+            string key = builder.Configuration["jwt:key"] ?? "";
+
+            builder.Services.AddSingleton(new TokenService(key));
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+
 
             var app = builder.Build();
 

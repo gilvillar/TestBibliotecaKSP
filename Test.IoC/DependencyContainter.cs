@@ -6,11 +6,10 @@ namespace Test.IoC
 {
     public static class DependencyContainter
     {
-        public static IServiceCollection BookManagerService(this IServiceCollection services) 
+        public static IServiceCollection ManagerService(this IServiceCollection services) 
         {
-            //services.AddScoped<BookService>();
             services.AddRepository();
-            services.AddBookService();
+            services.AddServices();
 
             return services;
         }

@@ -16,10 +16,14 @@ namespace Test.DAL
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().
+                HasKey(x => x.Id);
+
+            modelBuilder.Entity<User>().
                 HasKey(x => x.Id);
         }
     }

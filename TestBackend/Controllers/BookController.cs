@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Test.BLL;
 using Test.Entities;
@@ -20,6 +21,7 @@ namespace TestBackend.Controllers
         public async Task<ActionResult<List<Book>>> GetBooks()
         {
                var books = await _bookService.GetAllBooks();
+
                 return Ok(books);
             
         }
@@ -58,6 +60,35 @@ namespace TestBackend.Controllers
         public async Task<IActionResult> UpdateBook(int id, Book book,byte operation)
         {
             var result = await _bookService.UpdateBook(id,book,operation);
+            if (result)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpPut("{id}/lend")]
+        public async Task<IActionResult> LendBook(int id, Book book, byte operation)
+        {
+            var result = await _bookService.UpdateBook(id, book, operation);
+            if (result)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{id}/return")]
+        public async Task<IActionResult> ReturnBook(int id, Book book, byte operation)
+        {
+            var result = await _bookService.UpdateBook(id, book, operation);
             if (result)
             {
                 return NoContent();

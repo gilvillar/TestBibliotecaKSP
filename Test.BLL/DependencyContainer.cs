@@ -5,9 +5,10 @@ namespace Test.BLL
 {
     public static class DependencyContainer
     {
-        public static IServiceCollection AddBookService(this IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IUserService, AuthService>();
 
             return services;
         }

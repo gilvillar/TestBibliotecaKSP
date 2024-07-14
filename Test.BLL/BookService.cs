@@ -54,7 +54,9 @@ namespace Test.BLL
 
         public async Task<List<Book>> GetAllBooks()
         {
-            return await _bookRepository.GetAllBooks();
+            var books =  await _bookRepository.GetAllBooks();
+            
+            return books;
         }
 
         public async Task<bool> UpdateBook(int id, Book book, byte operation)
