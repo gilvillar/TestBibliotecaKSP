@@ -1,5 +1,7 @@
 
+using Serilog;
 using Test.IoC;
+using TestBackend.Middleware;
 
 namespace TestBackend
 {
@@ -8,6 +10,13 @@ namespace TestBackend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Configurar Serilog
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
 
             // Add services to the container.
             builder.Services.BookManagerService();
@@ -41,10 +50,25 @@ namespace TestBackend
 
             app.UseAuthorization();
 
+            // Add ExceptionMiddleware
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.MapControllers();
 
-            app.Run();
+            //app.Run();
+            try
+            {
+                Log.Information("Starting up the application");
+                app.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application start-up failed");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
     }
 }

@@ -47,6 +47,10 @@ namespace Test.DAL
                     _context.Remove<Book>(book);
                     result = await _context.SaveChangesAsync();
                 }
+                else
+                {
+                    throw new Exception("El libro no existe");
+                }
 
             }
 

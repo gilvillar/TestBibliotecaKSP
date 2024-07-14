@@ -19,16 +19,24 @@ namespace TestBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Book>>> GetBooks()
         {
-            var books = await _bookService.GetAllBooks();
-            return Ok(books);
+               var books = await _bookService.GetAllBooks();
+                return Ok(books);
+            
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateBook(Book book)
         {
-            await _bookService.CreateBook(book);
+            var result = await _bookService.CreateBook(book);
 
-            return CreatedAtAction(nameof(CreateBook), new { id = book.Id }, book);
+            if(result?.Id != null)
+            {
+                return CreatedAtAction(nameof(CreateBook), new { id = book.Id }, book);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]
@@ -47,15 +55,9 @@ namespace TestBackend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, Book book)
+        public async Task<IActionResult> UpdateBook(int id, Book book,byte operation)
         {
-            
-            if (id != book.Id)
-            {
-                return BadRequest();
-            }
-
-            var result = await _bookService.UpdateBook(book);
+            var result = await _bookService.UpdateBook(id,book,operation);
             if (result)
             {
                 return NoContent();
