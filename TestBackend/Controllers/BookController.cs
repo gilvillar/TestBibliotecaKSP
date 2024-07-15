@@ -27,18 +27,20 @@ namespace TestBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateBook(Book book)
+        public async Task<ActionResult> CreateBook(Book model)
         {
-            var result = await _bookService.CreateBook(book);
+            var book = await _bookService.CreateBook(model);
 
-            if(result?.Id != null)
+            if(book == null)
             {
-                return CreatedAtAction(nameof(CreateBook), new { id = book.Id }, book);
+                return Conflict();
             }
-            else
+            else if(book?.Id ==0)
             {
                 return BadRequest();
             }
+             
+            return CreatedAtAction(nameof(CreateBook), new { id = book.Id }, book);
         }
 
         [HttpDelete("{id}")]
@@ -57,9 +59,9 @@ namespace TestBackend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, Book book,byte operation)
+        public async Task<IActionResult> UpdateBook(int id, Book book)
         {
-            var result = await _bookService.UpdateBook(id,book,operation);
+            var result = await _bookService.UpdateBook(id,book);
             if (result)
             {
                 return NoContent();
@@ -72,9 +74,9 @@ namespace TestBackend.Controllers
 
         [Authorize]
         [HttpPut("{id}/lend")]
-        public async Task<IActionResult> LendBook(int id, Book book, byte operation)
+        public async Task<IActionResult> LendBook(int id, Book book)
         {
-            var result = await _bookService.UpdateBook(id, book, operation);
+            var result = await _bookService.UpdateBook(id, book);
             if (result)
             {
                 return NoContent();
@@ -86,9 +88,9 @@ namespace TestBackend.Controllers
         }
 
         [HttpPut("{id}/return")]
-        public async Task<IActionResult> ReturnBook(int id, Book book, byte operation)
+        public async Task<IActionResult> ReturnBook(int id, Book book)
         {
-            var result = await _bookService.UpdateBook(id, book, operation);
+            var result = await _bookService.UpdateBook(id, book);
             if (result)
             {
                 return NoContent();

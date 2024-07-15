@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using Test.Entities;
 
 namespace Test.BLL
@@ -16,16 +17,25 @@ namespace Test.BLL
 
         public async Task<Book?> CreateBook(Book book)
         {
-            Book? result = null;
+            Book? result = new Book();
             try
             {
-                if(book != null && !string.IsNullOrEmpty(book.Title) && !string.IsNullOrEmpty(book.Author)) {
-                    result = await _bookRepository.CreateBook(book);
-                }
-                else
+
+                if (string.IsNullOrEmpty(book.Title) && string.IsNullOrEmpty(book.Author))
                 {
                     throw new Exception("El titulo y autor del libro son obligatorios");
                 }
+                else
+                {
+                    var existe = await GetBookByTitle(book.Title);
+                    if (existe != null)
+                    {
+                        result = null;
+                        throw new Exception("El libro ya existe");
+                    }
+                }
+
+                result = await _bookRepository.CreateBook(book);
             }
             catch (Exception ex)
             {
@@ -54,12 +64,42 @@ namespace Test.BLL
 
         public async Task<List<Book>> GetAllBooks()
         {
-            var books =  await _bookRepository.GetAllBooks();
-            
+            var books = await _bookRepository.GetAllBooks();
+
             return books;
         }
 
-        public async Task<bool> UpdateBook(int id, Book book, byte operation)
+        public async Task<Book?> GetBookById(int id)
+        {
+            Book? book = new Book();
+            try
+            {
+                return await _bookRepository.GetBookById(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ocurrio un error al intentar obtener el libro");
+            }
+
+            return book;
+
+        }
+        public async Task<Book?> GetBookByTitle(string title)
+        {
+            Book? book = new Book();
+            try
+            {
+                return await _bookRepository.GetBookByTitle(title);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ocurrio un error al intentar obtener el libro");
+            }
+
+            return book;
+        }
+
+        public async Task<bool> UpdateBook(int id, Book book)
         {
             bool result = false;
 
@@ -72,28 +112,98 @@ namespace Test.BLL
                 }
                 else
                 {
+                    var existe = _bookRepository.GetBookById(book.Id);
+                    if (existe == null)
+                    {
+                        result = false;
+                        throw new Exception("El libro no existe");
+                    }
+
                     result = await _bookRepository.UpdateBook(book);
                 }
             }
             catch (Exception ex)
             {
-                switch (operation)
-                {
-                    case 1:
-                        _logger.LogError(ex, "Ocurrio un error al intentar actualizar el libro.");
-                        break;
-                    case 2:
-                        _logger.LogError(ex, "Ocurrio un error al intentar prestar el libro.");
-                        break;
-                    case 3:
-                        _logger.LogError(ex, "Ocurrio un error al intentar devolver el libro.");
-                        break;
-                }
-
+                _logger.LogError(ex, "Ocurrio un error al intentar actualizar el libro.");
             }
 
             return result;
-          
+
+        }
+
+        public async Task<bool> LendBook(int id, Book book)
+        {
+            bool result = false;
+
+            try
+            {
+                if (id != book.Id)
+                {
+                    result = false;
+                    throw new Exception("El id del libro es incorrecto");
+                }
+                else
+                {
+                    var existe = await _bookRepository.GetBookById(book.Id);
+
+                    if (existe == null)
+                    {
+                        result = false;
+                        throw new Exception("El libro no existe");
+                    }
+                    else if(existe.Available == 0)
+                    {
+                        result = false;
+                        throw new Exception("No hay libros disponibles");
+                    }
+
+                    result = await _bookRepository.UpdateBook(book);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                 _logger.LogError(ex, "Ocurrio un error al intentar actualizar el libro.");
+            }
+
+            return result;
+        }
+
+        public async Task<bool> ReturnBook(int id, Book book)
+        {
+            bool result = false;
+
+            try
+            {
+                if (id != book.Id)
+                {
+                    result = false;
+                    throw new Exception("El id del libro es incorrecto");
+                }
+                else
+                {
+                    var existe = await _bookRepository.GetBookById(book.Id);
+
+                    if (existe == null)
+                    {
+                        result = false;
+                        throw new Exception("El libro no existe");
+                    }
+                    else if (existe.LendBooks == 0)
+                    {
+                        result = false;
+                        throw new Exception("No hay libros prestados");
+                    }
+
+                    result = await _bookRepository.UpdateBook(book);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ocurrio un error al intentar actualizar el libro.");
+            }
+
+            return result;
         }
     }
 }

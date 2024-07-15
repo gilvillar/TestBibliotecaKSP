@@ -11,6 +11,11 @@ namespace Test.Entities
         Task<Book?> CreateBook(Book book);
         Task<bool> DeleteBook(int id);
         Task<List<Book>> GetAllBooks();
-        Task<bool> UpdateBook(int id, Book book, byte operation);
+        Task<Book> GetBookByTitle(string title);
+        Task<Book?> GetBookById(int id);
+        Task<bool> UpdateBook(int id, Book book);
+
+        Task<bool> LendBook(int id, Book book);
+        Task<bool> ReturnBook(int id, Book book);
     }
 }

@@ -39,6 +39,32 @@ namespace Test.DAL
             return user;
         }
 
+        public async Task<User?> GetUserByUserName(string userName)
+        {
+            User? user = new User();
+
+            using (var _context = new ApiContext())
+            {
+                user = await _context.Users.
+                    Where(x => x.Username == userName).
+                    FirstOrDefaultAsync();
+            }
+
+            return user;
+        }
+
+        public async Task<List<User>> GetAll()
+        {
+            List<User> users = new List<User>();
+
+            using (var _context = new ApiContext())
+            {
+                users = await _context.Users.ToListAsync();
+            }
+
+            return users;
+        }
+
         private void InitializedData()
         {
             using (var _context = new ApiContext())

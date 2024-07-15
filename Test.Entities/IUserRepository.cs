@@ -10,5 +10,7 @@ namespace Test.Entities
     {
         Task<User?> CreateUser(User user);
         Task<User?> GetUser(User user);
+        Task<User?> GetUserByUserName(string userName);
+        Task<List<User>> GetAll();
     }
 }

@@ -22,7 +22,7 @@ namespace Test.DAL
             return book;
         }
 
-        public async Task<Book> GetBookById(int id)
+        public async Task<Book?> GetBookById(int id)
         {
             Book? book;
 
@@ -31,7 +31,19 @@ namespace Test.DAL
                 book = await _context.Books.FindAsync(id);
             }
 
-            return book ?? new Book();
+            return book;
+        }
+
+        public async Task<Book?> GetBookByTitle(string title)
+        {
+            Book? book;
+
+            using (var _context = new ApiContext())
+            {
+                book = await _context.Books.Where(x=> x.Title.ToUpper() == title.ToUpper()).FirstOrDefaultAsync();
+            }
+
+            return book;
         }
 
         public async Task<bool> DeleteBook(int id)
@@ -56,7 +68,6 @@ namespace Test.DAL
 
             return result == 1;
         }
-
 
         public async Task<List<Book>> GetAllBooks()
         {
@@ -96,7 +107,7 @@ namespace Test.DAL
                             Title="Caballo de Troya",
                             Author = "JJ. Benitez",
                             Stock = 5,
-                            LentBooks=0,
+                            LendBooks=0,
                             Available=5
                         },
                         new Book {
@@ -104,7 +115,7 @@ namespace Test.DAL
                             Title = "Azteca",
                             Author ="Gary Jennings",
                             Stock = 6,
-                            LentBooks=0,
+                            LendBooks=0,
                             Available=6
                         },
                         new Book {
@@ -112,7 +123,7 @@ namespace Test.DAL
                             Title = "El Psicoanalista",
                             Author="John Katzenbach",
                             Stock=4,
-                            LentBooks=0,
+                            LendBooks=0,
                             Available=4
                         }
                     };
