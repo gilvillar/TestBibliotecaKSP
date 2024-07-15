@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Test.Entities;
+using TestBackend.Models;
 
 namespace TestBackend.Services
 {
@@ -15,7 +16,7 @@ namespace TestBackend.Services
             _key = key;
         }
 
-        public string GenerateToken(User user)
+        public UserToken GenerateToken(User user)
         {
             var claims = new List<Claim>()
             {
@@ -26,15 +27,20 @@ namespace TestBackend.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expiration = DateTime.Now.AddMinutes(30);
 
             var token = new JwtSecurityToken(
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: expiration,
                 signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new UserToken()
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = expiration
+            };
         }
     }
 }

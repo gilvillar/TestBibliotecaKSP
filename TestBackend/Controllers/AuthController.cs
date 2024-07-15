@@ -22,6 +22,16 @@ namespace TestBackend.Controllers
             _tokenService = tokenService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> GetAllUsers()
+        {
+            var users = await _authService.GetAllUsers();
+
+            return Ok(users);
+
+        }
+
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
@@ -29,19 +39,23 @@ namespace TestBackend.Controllers
 
             if (user == null)
             {
-                return Unauthorized(user);
+                return Unauthorized();
             }
 
-            var token = _tokenService.GenerateToken(user);
-            return Ok(new { token });
+            var userToken = _tokenService.GenerateToken(user);
+            return Ok(userToken);
         }
 
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var user = _authService.CreateUser(model.Username, model.Password, model.Name);
+            var user = await _authService.CreateUser(model.Username, model.Password, model.Name);
 
-            if (user.Id == 0)
+            if (user == null)
+            {
+                return Conflict();
+            }
+            else if(user.Id== 0)
             {
                 return BadRequest();
             }
