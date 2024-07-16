@@ -10,13 +10,14 @@ export class LayoutPageBooksComponent {
   user: string|undefined = 'Bienvenido: ';
 
  constructor(
-  private authService: AuthApiService,
+  private authService: AuthApiService, //inyectamos el servicio de autenticacion
  ){}
 
  ngOnInit(){
   this.getUserInfo();
  }
 
+ //metodo que obtiene la informacion del usuario logueado
   getUserInfo(){
 
     this.authService.checkAuthentication().subscribe({

@@ -1,9 +1,12 @@
+//componente que realiza el registro de un nuevo usuario
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterModel } from '../../interfaces/register-model.interface';
-import { AuthApiService } from '../../services/authServices';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+
+import { RegisterModel } from '../../interfaces/register-model.interface';
+import { AuthApiService } from '../../services/authServices';
 
 @Component({
   selector: 'app-auth-register',
@@ -22,6 +25,7 @@ export class RegisterAuthComponent {
     private _snackBar: MatSnackBar,
     private router: Router,
   ){
+    //creamos el formulario
     this.formRegister = this.fb.group({
       username: ['',Validators.required],
       password: ['',Validators.required],
@@ -29,6 +33,7 @@ export class RegisterAuthComponent {
     });
   }
 
+  //metodo que muestra un alerta
   mostrarAlerta(message: string, action: string) {
     this._snackBar.open(message, action,{
         horizontalPosition: this.horizontalPosition,
@@ -37,6 +42,7 @@ export class RegisterAuthComponent {
       });
   }
 
+  //metodo que realiza el registro de un usuario
   registerUser():void{
 
     const user:RegisterModel={

@@ -56,12 +56,14 @@
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button class="success-icon"
             matTooltip="Editar un libro"
-            (click)="editBook(element)">
+            (click)="editBook(element)"
+            *ngIf="isLoguedIn()">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button class="red-icon"
             matTooltip="Eliminar un libro"
-            (click)="deleteBook(element)">
+            (click)="deleteBook(element)"
+            *ngIf="isLoguedIn()">
             <mat-icon>delete_forever</mat-icon>
           </button>
           <button mat-icon-button class="warm-icon"

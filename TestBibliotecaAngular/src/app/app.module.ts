@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+import { MaterialModule } from './material/material.module';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MaterialModule } from './material/material.module';
 import { BooksModule } from './Books/books.module';
-import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "./shared/shared.module";
 import { AuthModule } from './auth/auth.module';
+
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [

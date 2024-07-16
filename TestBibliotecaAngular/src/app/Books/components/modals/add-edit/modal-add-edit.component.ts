@@ -1,7 +1,10 @@
+//este componente gestiona la creacion y modificacion de un libro en una ventana de dialogo
+
 import { Component, inject, Inject, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+
 import { Book } from '../../../interfaces/book.interface';
 import { BooksApiService } from '../../../services/books.service';
 
@@ -24,8 +27,9 @@ export class ModalAddEditComponent {
     private fb:FormBuilder,
     private _snackBar: MatSnackBar,
     private bookService: BooksApiService,
-    @Inject(MAT_DIALOG_DATA)public dataBook:Book
+    @Inject(MAT_DIALOG_DATA)public dataBook:Book //injectamos los datos del libro si existen para modificacion
   ) {
+    // creamos un formulario
     this.formBook = this.fb.group({
       id: [0],
       title: ['',Validators.required],
@@ -37,6 +41,7 @@ export class ModalAddEditComponent {
   }
 
   ngOnInit():void{
+    //si exiten datos es porque es un proceso de actualizacion
     if(this.dataBook){
       this.formBook.patchValue({
         id: this.dataBook.id,
@@ -51,6 +56,7 @@ export class ModalAddEditComponent {
     }
   }
 
+  //metodo que envia un mensaje de alerta
   mostrarAlerta(message: string, action: string) {
     this._snackBar.open(message, action,{
         horizontalPosition: this.horizontalPosition,
@@ -59,6 +65,7 @@ export class ModalAddEditComponent {
       });
   }
 
+  //metodo que gestiona la creacion o modificacion de un libro
   addEditBook(){
     const book:Book={
       id: 0,
@@ -69,7 +76,9 @@ export class ModalAddEditComponent {
       available: this.formBook.value.stock - this.formBook.value.lendBooks
     };
 
+    //si databook es null es un proceso de creacion
     if(this.dataBook==null){
+      //invocamos al servicio bookservice
       this.bookService.addItems(book).subscribe({
         next:(data)=>{
           this.mostrarAlerta('El libro fue creado','Ok');
@@ -80,7 +89,7 @@ export class ModalAddEditComponent {
         }
       })
     }
-    else{
+    else{ //si databook no es null es un proceso de actualizacion
       if(book.stock < book.lendBooks){
         this.mostrarAlerta('El stock no puede ser menor que los libros prestados','Error');
       }

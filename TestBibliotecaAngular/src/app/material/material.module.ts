@@ -1,3 +1,4 @@
+//modulo que concentra los modulos de Angular Material que se utilizan
 import { NgModule } from '@angular/core';
 import {MatTableModule} from '@angular/material/table'
 import {MatButtonModule} from '@angular/material/button';

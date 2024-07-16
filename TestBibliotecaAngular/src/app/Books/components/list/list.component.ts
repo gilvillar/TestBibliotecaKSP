@@ -1,11 +1,14 @@
+//componente que presenta la lista de libros y gestiona el proceso
+// de alta, eliminacion, modificacion, prestar y devolver libros
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import { Book } from '../../interfaces/book.interface';
-import { BooksApiService } from '../../services/books.service';
-import { ModalAddEditComponent } from '../modals/add-edit/modal-add-edit.component';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+
+import { Book } from '../../interfaces/book.interface';
+import { BooksApiService } from '../../services/books.service';
+import { ModalAddEditComponent } from '../modals/add-edit/modal-add-edit.component';
 import { ModalDeleteComponent } from '../modals/delete/delete.component';
 import { ModalLendComponent } from '../modals/lend/lend.component';
 import { ModalReturnComponent } from '../modals/return/return.component';
@@ -41,6 +44,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
+  //genera un nuevo libro
   newBook() {
     const dialogRef = this.dialog.open(ModalAddEditComponent,
       {
@@ -53,6 +57,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
     });
   }
 
+  //edita un libro existente
   editBook(book: Book){
     const dialogRef = this.dialog.open(ModalAddEditComponent,
       {
@@ -68,6 +73,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
     });
   }
 
+  //obtiene la lista de libros
   listBooks(){
     this.service.getItems().subscribe({
       next:(dataResponse) =>{
@@ -79,6 +85,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
     });
   }
 
+  //elimina un libro existente
   deleteBook(book: Book):void{
     if(book.stock==0)
     {
@@ -105,6 +112,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
     }
   }
 
+  //realiza el prestamo de un libro
   lendBook(book:Book):void{
     if(book.available>0){
       this.dialog.open(ModalLendComponent,
@@ -134,6 +142,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
 
   }
 
+  //realiza la devolucion de un libro
   returnBook(book:Book):void{
     if(book.lendBooks>0){
       this.dialog.open(ModalReturnComponent,
@@ -162,6 +171,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
 
   }
 
+  //metodo que muestra la alerta
   mostrarAlerta(message: string, action: string) {
     this._snackBar.open(message, action,{
         horizontalPosition: this.horizontalPosition,
@@ -170,6 +180,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
       });
   }
 
+  //metodo que verifica si el usuario esta logueado
   isLoguedIn(){
     return this.authService.isLoggedIn();;
   }

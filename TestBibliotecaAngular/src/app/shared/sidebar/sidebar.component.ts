@@ -11,18 +11,20 @@ import { CommonModule } from '@angular/common';
 export class SharedSidebarComponent {
 
   constructor(
-    private authService: AuthApiService,
+    private authService: AuthApiService, //inyectamos el servicio de autorizacion
     private router: Router,
   ){
 
   }
 
+  //metodo que cierra la sesión
   logout():void{
     this.authService.logout();
 
     this.router.navigate(['/auth']);
   }
 
+  //metodo que verifica si el usuario esta logueado
   isLoguedIn(){
      const value = this.authService.isLoggedIn();
 

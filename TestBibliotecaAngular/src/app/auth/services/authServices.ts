@@ -1,3 +1,4 @@
+//componente que gestiona la comunicacion con el api
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -12,7 +13,7 @@ export class AuthApiService {
 
   constructor(private http: HttpClient) { }
 
-
+  //metodo que realiza el registro de un usuario
   registerUser(item: any):Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -26,6 +27,7 @@ export class AuthApiService {
     )
   }
 
+  //metodo que realiza el login de un usuario
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password })
       .pipe(
@@ -41,24 +43,25 @@ export class AuthApiService {
     );
   }
 
+  //metodo que cierra la sesión
   logout(): void {
     // Eliminar el usuario del local storage para cerrar sesión
     localStorage.removeItem('currentUser');
   }
 
+  //metodo que obtiene el token
   getToken(): any | null {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
-    // console.log(currentUser);
     return currentUser;
   }
 
+  //metodo que verifica si un usuario esta logueado o no
   isLoggedIn(): boolean {
     const result =  this.getToken() !== null;
-    // console.log(result);
     return result
   }
 
-
+  //metodo que obtiene los datos del usuario que esta logueado
   checkAuthentication(): Observable<any>{
     const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
     const nothingObservable = of('');
@@ -71,6 +74,7 @@ export class AuthApiService {
     }
   }
 
+  //metodo que maneja los errores
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente

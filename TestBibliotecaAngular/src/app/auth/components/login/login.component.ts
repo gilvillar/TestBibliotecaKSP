@@ -1,9 +1,12 @@
+//componente que gestiona el inicio de sesión de un usuario
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthApiService } from '../../services/authServices';
-import { LoginModel } from '../../interfaces/user-token.interface';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+
+import { AuthApiService } from '../../services/authServices';
+import { LoginModel } from '../../interfaces/user-token.interface';
 
 @Component({
   selector: 'app-auth-login',
@@ -22,12 +25,14 @@ export class LoginAuthComponent {
     private router: Router,
     private _snackBar: MatSnackBar,
   ){
+    //creamos el formulario
     this.formLogin = this.fb.group({
       username: ['',Validators.required],
       password: ['',Validators.required],
     });
   }
 
+  //metodo que muestra un alerta
   mostrarAlerta(message: string, action: string) {
     this._snackBar.open(message, action,{
         horizontalPosition: this.horizontalPosition,
@@ -36,6 +41,7 @@ export class LoginAuthComponent {
       });
   }
 
+  //metodo que realiza el inicio de sesion
   loginUser():void{
 
     const loginModel :LoginModel={
