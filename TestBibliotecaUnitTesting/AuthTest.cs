@@ -53,7 +53,7 @@ namespace TestBibliotecaUnitTesting
             //Arrange
 
             LoginModel model = new LoginModel {
-                Username = "admin",
+                UserName = "admin",
                 Password = "admingvr",
             };
 
@@ -78,7 +78,7 @@ namespace TestBibliotecaUnitTesting
 
             LoginModel model = new LoginModel
             {
-                Username = "admin",
+                UserName = "admin",
                 Password = "admin",
             };
 
@@ -100,7 +100,7 @@ namespace TestBibliotecaUnitTesting
 
             RegisterModel model = new RegisterModel
             {
-                Username = "prueba1",
+                UserName = "prueba1",
                 Password = "prueba1",
                 Name="Gilberto"
             };
@@ -123,7 +123,7 @@ namespace TestBibliotecaUnitTesting
 
             RegisterModel model = new RegisterModel
             {
-                Username = "admin",
+                UserName = "admin",
                 Password = "admin",
                 Name = "Gilberto"
             };
