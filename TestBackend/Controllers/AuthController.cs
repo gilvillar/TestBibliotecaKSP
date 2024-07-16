@@ -31,11 +31,20 @@ namespace TestBackend.Controllers
 
         }
 
+        [HttpGet("User")]
+        public async Task<ActionResult<List<User>>> GetUser(string userName)
+        {
+            var user = await _authService.GetUserByUserName(userName);
+
+            return Ok(user);
+
+        }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var user = await _authService.GetUser(model.Username,model.Password);
+            var user = await _authService.GetUser(model.UserName,model.Password);
 
             if (user == null)
             {
@@ -43,13 +52,14 @@ namespace TestBackend.Controllers
             }
 
             var userToken = _tokenService.GenerateToken(user);
+           
             return Ok(userToken);
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var user = await _authService.CreateUser(model.Username, model.Password, model.Name);
+            var user = await _authService.CreateUser(model.UserName, model.Password, model.Name);
 
             if (user == null)
             {

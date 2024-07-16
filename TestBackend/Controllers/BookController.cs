@@ -72,7 +72,7 @@ namespace TestBackend.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("{id}/lend")]
         public async Task<IActionResult> LendBook(int id, Book book)
         {

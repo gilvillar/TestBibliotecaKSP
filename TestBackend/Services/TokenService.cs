@@ -16,12 +16,15 @@ namespace TestBackend.Services
             _key = key;
         }
 
+        //new Claim(ClaimTypes.Sid, user.Id.ToString()),
+        //        new Claim(ClaimTypes.Name, user.Name),
         public UserToken GenerateToken(User user)
         {
-            var claims = new List<Claim>()
+            var claims = new []
             {
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
+                
+                new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+                new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
