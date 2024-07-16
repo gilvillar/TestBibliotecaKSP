@@ -25,19 +25,28 @@ namespace Test.BLL
             User user = new User();
             try
             {
-
-                user.Username = userName;
-                user.Password = password;
-                user.Name = name;
-
-                var userExist = await GetUserByUserName(userName);
-
-                if (userExist != null)
+                if (string.IsNullOrEmpty(userName) &&
+                    string.IsNullOrEmpty(password) &&
+                    string.IsNullOrEmpty(name))
                 {
-                    throw new Exception("El usuario ya existe");
+                    throw new Exception("Todos los campos son obligartorios");
                 }
+                else
+                {
+                    user.Username = userName;
+                    user.Password = password;
+                    user.Name = name;
 
-                return await _userRepository.CreateUser(user);
+                    var userExist = await GetUserByUserName(userName);
+
+                    if (userExist != null)
+                    {
+                        throw new Exception("El usuario ya existe");
+                    }
+
+                    return await _userRepository.CreateUser(user);
+                }
+                
             }
             catch (Exception ex)
             {
