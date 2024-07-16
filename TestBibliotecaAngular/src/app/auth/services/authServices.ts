@@ -9,7 +9,8 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthApiService {
-  private apiUrl = 'https://localhost:7164/api/Auth'; // Reemplaza con la URL de tu API
+  // private apiUrl = 'https://localhost:7164/api/Auth'; // Reemplaza con la URL de tu API
+  private apiUrl = 'https://apptestksp.azurewebsites.net/api/auth'
 
   constructor(private http: HttpClient) { }
 

@@ -11,7 +11,8 @@ import { AuthApiService } from '../../auth/services/authServices';
   providedIn: 'root'
 })
 export class BooksApiService {
-  private apiUrl = 'https://localhost:7164/api/book'; // Reemplaza con la URL de tu API
+  // private apiUrl = 'https://localhost:7164/api/book'; // Reemplaza con la URL de tu API
+  private apiUrl = 'https://apptestksp.azurewebsites.net/api/book'
   private token : string = '';
 
   constructor(
