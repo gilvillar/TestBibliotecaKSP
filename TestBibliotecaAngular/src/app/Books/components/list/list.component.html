@@ -67,8 +67,8 @@
           <button mat-icon-button class="warm-icon"
             matTooltip="Prestar un libro"
             (click)="lendBook(element)"
+            *ngIf="isLoguedIn()"
             >
-            <!-- *ngIf="isLoguedIn()" -->
             <mat-icon>assignment_return</mat-icon>
           </button>
           <button mat-icon-button class="primary-icon"

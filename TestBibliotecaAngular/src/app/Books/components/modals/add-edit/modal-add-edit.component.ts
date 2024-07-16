@@ -81,8 +81,8 @@ export class ModalAddEditComponent {
       })
     }
     else{
-      if(book.stock==0 && book.lendBooks>0){
-        this.mostrarAlerta('El stock no puede ser 0 por que hay libros prestados','Error');
+      if(book.stock < book.lendBooks){
+        this.mostrarAlerta('El stock no puede ser menor que los libros prestados','Error');
       }
       else{
         book.id = this.dataBook.id;
