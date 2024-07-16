@@ -4,12 +4,16 @@ using Test.DAL;
 
 namespace Test.IoC
 {
+    /// <summary>
+    /// Esta clase se utiliza para crear un metodo de extension que permita el registro de servicios
+    /// del repositorio y de los servicios de negocio
+    /// </summary>
     public static class DependencyContainter
     {
-        public static IServiceCollection BookManagerService(this IServiceCollection services) 
+        public static IServiceCollection ManagerService(this IServiceCollection services) 
         {
-            services.AddScoped<BookService>();
             services.AddRepository();
+            services.AddServices();
 
             return services;
         }

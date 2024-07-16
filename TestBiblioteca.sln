@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBackend", "TestBackend\TestBackend.csproj", "{0C9C2DA2-474F-4A38-A30A-E65B75E3C506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBackend", "TestBackend\TestBackend.csproj", "{0C9C2DA2-474F-4A38-A30A-E65B75E3C506}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.DAL", "Test.DAL\Test.DAL.csproj", "{F8A9FA69-AD20-4E0C-A47D-28B498343685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.DAL", "Test.DAL\Test.DAL.csproj", "{F8A9FA69-AD20-4E0C-A47D-28B498343685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.BLL", "Test.BLL\Test.BLL.csproj", "{2E309AEC-2830-4274-AE5A-A46B4CE7928E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.BLL", "Test.BLL\Test.BLL.csproj", "{2E309AEC-2830-4274-AE5A-A46B4CE7928E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Entities", "Test.Entities\Test.Entities.csproj", "{8B8AAD61-20AC-4B40-A63C-B8649935259F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Entities", "Test.Entities\Test.Entities.csproj", "{8B8AAD61-20AC-4B40-A63C-B8649935259F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.IoC", "Test.IoC\Test.IoC.csproj", "{CDCB1F13-5CD4-4FD6-A6A1-A878C0273413}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.IoC", "Test.IoC\Test.IoC.csproj", "{CDCB1F13-5CD4-4FD6-A6A1-A878C0273413}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TestBibliotecaAngular", "TestBibliotecaAngular\TestBibliotecaAngular.esproj", "{586BB6FD-16EF-4A58-9AC6-03701232C168}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBibliotecaUnitTesting", "TestBibliotecaUnitTesting\TestBibliotecaUnitTesting.csproj", "{7C8E72EF-5AFC-4689-B095-AEADB4C69267}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,16 @@ Global
 		{CDCB1F13-5CD4-4FD6-A6A1-A878C0273413}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDCB1F13-5CD4-4FD6-A6A1-A878C0273413}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDCB1F13-5CD4-4FD6-A6A1-A878C0273413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586BB6FD-16EF-4A58-9AC6-03701232C168}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C8E72EF-5AFC-4689-B095-AEADB4C69267}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

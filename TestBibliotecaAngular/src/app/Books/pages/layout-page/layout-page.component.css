@@ -1,0 +1,8 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.custom-toolbar-background {
+  background-color: #3f51b5; /* Cambia este color por el que desees */
+  color: white; /* Cambia el color del texto si es necesario */
+}

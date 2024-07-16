@@ -1,0 +1,94 @@
+
+<div style="width: 90%; margin: 40px auto">
+
+  <h2> Administracion de Biblioteca</h2>
+  <button mat-flat-button (click)="newBook()">Agregar Libro</button>
+  <hr>
+  <mat-form-field>
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Id Column -->
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width"> No. </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Titulo Column -->
+      <ng-container matColumnDef="Titulo">
+        <th mat-header-cell *matHeaderCellDef> Titulo </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <!-- Autor Column -->
+      <ng-container matColumnDef="Autor">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width" class="custom-column-width"> Autor </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width" class="custom-column-width"> {{element.author}} </td>
+      </ng-container>
+
+      <!-- Stock Column -->
+      <ng-container matColumnDef="Stock">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width" class="custom-column-width"> Stock </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width" class="custom-column-width"> {{element.stock}} </td>
+      </ng-container>
+
+      <!-- Prestados Column -->
+      <ng-container matColumnDef="Prestados">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width"> Prestados </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width"> {{element.lendBooks}} </td>
+      </ng-container>
+
+       <!-- Disponibles Column -->
+      <ng-container matColumnDef="Disponibles">
+        <th mat-header-cell *matHeaderCellDef class="custom-column-width"> Disponibles </th>
+        <td mat-cell *matCellDef="let element" class="custom-column-width"> {{element.available}} </td>
+      </ng-container>
+
+
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef style="width: 200px;"></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button class="success-icon"
+            matTooltip="Editar un libro"
+            (click)="editBook(element)"
+            *ngIf="isLoguedIn()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="red-icon"
+            matTooltip="Eliminar un libro"
+            (click)="deleteBook(element)"
+            *ngIf="isLoguedIn()">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+          <button mat-icon-button class="warm-icon"
+            matTooltip="Prestar un libro"
+            (click)="lendBook(element)"
+            *ngIf="isLoguedIn()"
+            >
+            <mat-icon>assignment_return</mat-icon>
+          </button>
+          <button mat-icon-button class="primary-icon"
+            matTooltip="Devolver un libro"
+            (click)="returnBook(element)">
+            <mat-icon>assignment_returned</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+
+</div>
