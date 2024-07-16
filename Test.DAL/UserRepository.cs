@@ -8,13 +8,22 @@ using Test.Entities;
 
 namespace Test.DAL
 {
+    /// <summary>
+    /// Esta clase realiza las operaciones a la tabla de usuarios.
+    /// </summary>
     public class UserRepository:IUserRepository
     {
         public UserRepository()
         {
+            //realizamos la carga de los datos iniciales
             InitializedData();
         }
 
+        /// <summary>
+        /// Crea un usuario en la bd.
+        /// </summary>
+        /// <param name="User">Objeto de tipo User.</param>
+        /// <returns>El usuario consultado.</returns>
         public async Task<User?> CreateUser(User user)
         {
             using (var _context = new ApiContext())
@@ -27,6 +36,11 @@ namespace Test.DAL
             return user;
         }
 
+        /// <summary>
+        /// Obtiene un usuario por su nombre de usuario y contraseña.
+        /// </summary>
+        /// <param name="user">Objeto de tipo User.</param>
+        /// <returns>El usuario consultado.</returns>
         public async Task<User?> GetUser(User? user)
         {
             using (var _context = new ApiContext())
@@ -39,6 +53,11 @@ namespace Test.DAL
             return user;
         }
 
+        /// <summary>
+        /// Obtiene un usuario por su nombre de usuario y contraseña.
+        /// </summary>
+        /// <param name="userName">El nombre de usuario a buscar en la base de datos.</param>
+        /// <returns>El usuario consultado.</returns>
         public async Task<User?> GetUserByUserName(string userName)
         {
             User? user = new User();
@@ -53,6 +72,10 @@ namespace Test.DAL
             return user;
         }
 
+        /// <summary>
+        /// Obtiene una lista de usuarios.
+        /// </summary>
+        /// <returns>Una lista de usuarios.</returns>
         public async Task<List<User>> GetAll()
         {
             List<User> users = new List<User>();
@@ -65,6 +88,9 @@ namespace Test.DAL
             return users;
         }
 
+        /// <summary>
+        /// Inserta datos iniciales a la base de datos
+        /// </summary>
         private void InitializedData()
         {
             using (var _context = new ApiContext())

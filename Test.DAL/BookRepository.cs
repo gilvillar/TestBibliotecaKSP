@@ -3,6 +3,9 @@ using Test.Entities;
 
 namespace Test.DAL
 {
+    /// <summary>
+    /// Esta clase realiza las operaciones a la tabla de libros.
+    /// </summary>
     public class BookRepository : IBookRepository
     {
         public BookRepository()
@@ -10,6 +13,11 @@ namespace Test.DAL
             InitializedData();
         }
 
+        /// <summary>
+        /// Crea un libro.
+        /// </summary>
+        /// <param name="book">Objeto de tipo Book.</param>
+        /// <returns>El libro creado.</returns>
         public async Task<Book> CreateBook(Book book)
         {
             using (var _context = new ApiContext())
@@ -22,30 +30,11 @@ namespace Test.DAL
             return book;
         }
 
-        public async Task<Book?> GetBookById(int id)
-        {
-            Book? book;
-
-            using (var _context = new ApiContext())
-            {
-                book = await _context.Books.FindAsync(id);
-            }
-
-            return book;
-        }
-
-        public async Task<Book?> GetBookByTitle(string title)
-        {
-            Book? book;
-
-            using (var _context = new ApiContext())
-            {
-                book = await _context.Books.Where(x=> x.Title.ToUpper() == title.ToUpper()).FirstOrDefaultAsync();
-            }
-
-            return book;
-        }
-
+        /// <summary>
+        /// Elimina un libro.
+        /// </summary>
+        /// <param name="id">Valor que representa el id del libro.</param>
+        /// <returns>Verdadero o falso.</returns>
         public async Task<bool> DeleteBook(int id)
         {
             int result = 0;
@@ -69,6 +58,10 @@ namespace Test.DAL
             return result == 1;
         }
 
+        /// <summary>
+        /// Obtiene todos los libros
+        /// </summary>
+        /// <returns>Una lista de libros.</returns>
         public async Task<List<Book>> GetAllBooks()
         {
             var result = new List<Book>();
@@ -81,6 +74,45 @@ namespace Test.DAL
             return result;
         }
 
+        /// <summary>
+        /// Obtiene un libro por su titulo
+        /// </summary>
+        /// /// <param name="title">Valor que representa el titulo del libro.</param>
+        /// <returns>El libro consultado</returns>
+        public async Task<Book?> GetBookByTitle(string title)
+        {
+            Book? book;
+
+            using (var _context = new ApiContext())
+            {
+                book = await _context.Books.Where(x=> x.Title.ToUpper() == title.ToUpper()).FirstOrDefaultAsync();
+            }
+
+            return book;
+        }
+
+        /// <summary>
+        /// Obtiene un libro.
+        /// </summary>
+        /// <param name="id">Valor que representa el id del libro a buscar.</param>
+        /// <returns>Verdadero o falso.</returns>
+        public async Task<Book?> GetBookById(int id)
+        {
+            Book? book;
+
+            using (var _context = new ApiContext())
+            {
+                book = await _context.Books.FindAsync(id);
+            }
+
+            return book;
+        }
+
+        /// <summary>
+        /// Actualiza los datos de un libro, prestamo y devolución.
+        /// </summary>
+        /// /// <param name="book">Valor que representa el libro a actualizar.</param>
+        /// <returns>Verdadero o falso.</returns>
         public async Task<bool> UpdateBook(Book book)
         {
             int result = 0;
@@ -93,6 +125,9 @@ namespace Test.DAL
             return result == 1;
         }
 
+        /// <summary>
+        /// Inserta datos iniciales a la base de datos
+        /// </summary>
         private void InitializedData()
         {
             using (var _context = new ApiContext())
