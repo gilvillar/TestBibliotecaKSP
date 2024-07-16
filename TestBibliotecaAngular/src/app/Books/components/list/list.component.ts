@@ -9,6 +9,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { ModalDeleteComponent } from '../modals/delete/delete.component';
 import { ModalLendComponent } from '../modals/lend/lend.component';
 import { ModalReturnComponent } from '../modals/return/return.component';
+import { AuthApiService } from '../../../auth/services/authServices';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
 
   constructor(
     private service: BooksApiService,
+    private authService: AuthApiService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
   ){  }
@@ -47,7 +49,6 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
       this.listBooks();
     });
   }
@@ -64,14 +65,12 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
       if(result === 'editado'){
         this.listBooks();
       }
-      console.log(`Dialog result: ${result}`);
     });
   }
 
   listBooks(){
     this.service.getItems().subscribe({
       next:(dataResponse) =>{
-        console.log(dataResponse);
         this.dataSource.data = dataResponse;
       },
       error:(e)=>{
@@ -114,15 +113,16 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
         data: book
       }).afterClosed().subscribe(resultado =>{
         if(resultado ==='prestar'){
-          book.lentBooks+=1;
+          book.lendBooks+=1;
           book.available-=1;
-          this.service.updateItem(book.id, book).subscribe({
+          this.service.lendBooks(book.id, book).subscribe({
             next:(data)=>{
               this.mostrarAlerta('El libro fue prestado','Ok');
               this.listBooks();
             },
             error:(e)=>{
               this.mostrarAlerta('No se pudo prestar','Error');
+              this.listBooks();
             }
           })
         }
@@ -135,7 +135,7 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
   }
 
   returnBook(book:Book):void{
-    if(book.lentBooks>0){
+    if(book.lendBooks>0){
       this.dialog.open(ModalReturnComponent,
       {
         disableClose:true,
@@ -143,8 +143,8 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
       }).afterClosed().subscribe(resultado =>{
         if(resultado ==='devolver'){
           book.available+=1;
-          book.lentBooks-=1;
-          this.service.updateItem(book.id, book).subscribe({
+          book.lendBooks-=1;
+          this.service.returnBooks(book.id, book).subscribe({
             next:(data)=>{
               this.mostrarAlerta('El libro fue devuelto','Ok');
               this.listBooks();
@@ -168,6 +168,10 @@ export class ListBooksComponent implements AfterViewInit, OnInit{
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000
       });
+  }
+
+  isLoguedIn(){
+    return this.authService.isLoggedIn();;
   }
 
   applyFilter(event: Event) {

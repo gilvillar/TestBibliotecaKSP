@@ -1,0 +1,85 @@
+
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthApiService {
+  private apiUrl = 'https://localhost:7164/api/Auth'; // Reemplaza con la URL de tu API
+
+  constructor(private http: HttpClient) { }
+
+
+  registerUser(item: any):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.apiUrl}/register`, item, httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { username, password })
+      .pipe(
+        map (response => {
+
+        // Almacenar el token JWT en el local storage
+        if (response && response.token) {
+          localStorage.setItem('currentUser', JSON.stringify({ username, token: response }));
+        }
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  logout(): void {
+    // Eliminar el usuario del local storage para cerrar sesión
+    localStorage.removeItem('currentUser');
+  }
+
+  getToken(): any | null {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    // console.log(currentUser);
+    return currentUser;
+  }
+
+  isLoggedIn(): boolean {
+    const result =  this.getToken() !== null;
+    // console.log(result);
+    return result
+  }
+
+
+  checkAuthentication(): Observable<any>{
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    const nothingObservable = of('');
+
+    if(currentUser !== null){
+      return this.http.get<any>(`${this.apiUrl}/User?userName=${currentUser.username}`);
+    }
+    else{
+      return nothingObservable;
+    }
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      console.error('Ocurrió un error:', error.error.message);
+    } else {
+      // Error del lado del servidor
+      console.error(`Código de error del servidor: ${error.status}, ` + `cuerpo: ${error.error}`);
+    }
+    // Retorna un observable con un mensaje de error para que el componente lo maneje
+    return throwError('Ocurrió un problema; por favor, inténtelo nuevamente más tarde.');
+  }
+}

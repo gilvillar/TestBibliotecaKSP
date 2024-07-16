@@ -3,6 +3,6 @@ export interface Book{
   title: string;
   author: string;
   stock: number;
-  lentBooks: number;
+  lendBooks: number;
   available: number;
 }

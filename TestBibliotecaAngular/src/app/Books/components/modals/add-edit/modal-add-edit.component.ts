@@ -31,7 +31,7 @@ export class ModalAddEditComponent {
       title: ['',Validators.required],
       author: ['',Validators.required],
       stock: [0,Validators.required],
-      lentBooks:[0],
+      lendBooks:[0],
       available:[0]
     });
   }
@@ -43,7 +43,7 @@ export class ModalAddEditComponent {
         title: this.dataBook.title,
         author: this.dataBook.author,
         stock: this.dataBook.stock,
-        lentBooks:this.dataBook.lentBooks,
+        lendBooks:this.dataBook.lendBooks,
         available:this.dataBook.available,
       });
 
@@ -65,8 +65,8 @@ export class ModalAddEditComponent {
       title: this.formBook.value.title,
       author: this.formBook.value.author,
       stock: this.formBook.value.stock,
-      lentBooks: this.formBook.value.lentBooks,
-      available: this.formBook.value.stock - this.formBook.value.lentBooks
+      lendBooks: this.formBook.value.lendBooks,
+      available: this.formBook.value.stock - this.formBook.value.lendBooks
     };
 
     if(this.dataBook==null){
@@ -81,7 +81,7 @@ export class ModalAddEditComponent {
       })
     }
     else{
-      if(book.stock==0 && book.lentBooks>0){
+      if(book.stock==0 && book.lendBooks>0){
         this.mostrarAlerta('El stock no puede ser 0 por que hay libros prestados','Error');
       }
       else{

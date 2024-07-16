@@ -8,9 +8,18 @@
       Libros
     </a>
     <a routerLink="./auth"
-      class="list-group-item list-group-item-action mt-2">
+      class="list-group-item list-group-item-action mt-2"
+      *ngIf="!isLoguedIn()">
       Iniciar Sesión
-  </a>
+    </a>
+    <button
+      class="list-group-item list-group-item-action mt-2"
+      (click)="logout()"
+      *ngIf="isLoguedIn()"
+
+      >
+      Cerrar Sesión
+    </button>
   </div>
 </div>
 

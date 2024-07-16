@@ -8,6 +8,7 @@ import { MaterialModule } from './material/material.module';
 import { BooksModule } from './Books/books.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "./shared/shared.module";
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from "./shared/shared.module";
     ReactiveFormsModule,
     MaterialModule,
     BooksModule,
-    SharedModule
+    SharedModule,
+    AuthModule
 ],
   providers: [
     provideAnimationsAsync()
