@@ -7,6 +7,9 @@ using TestBackend.Models;
 
 namespace TestBackend.Services
 {
+    /// <summary>
+    /// Clase que genera el token de usuario para la autenticación
+    /// </summary>
     public class TokenService
     {
         private readonly string _key;
@@ -16,13 +19,10 @@ namespace TestBackend.Services
             _key = key;
         }
 
-        //new Claim(ClaimTypes.Sid, user.Id.ToString()),
-        //        new Claim(ClaimTypes.Name, user.Name),
         public UserToken GenerateToken(User user)
         {
             var claims = new []
-            {
-                
+            {                
                 new Claim(JwtRegisteredClaimNames.Sub, user.Name),
                 new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -39,6 +39,7 @@ namespace TestBackend.Services
                 expires: expiration,
                 signingCredentials: creds);
 
+            //retornamos el token generado
             return new UserToken()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),

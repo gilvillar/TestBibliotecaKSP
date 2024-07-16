@@ -27,14 +27,16 @@ namespace TestBackend
 
             builder.Host.UseSerilog();
 
-            // Add services to the container.
+            // Registramos los servicios para usuarios y libros
             builder.Services.ManagerService();
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //configuramos los CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -44,10 +46,12 @@ namespace TestBackend
                 );
             });
 
+            //obtnemos el key para generar el token
             string key = builder.Configuration["jwt:key"] ?? "";
 
             builder.Services.AddSingleton(new TokenService(key));
 
+            //registramos los servicios de autenticacion
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -83,12 +87,12 @@ namespace TestBackend
 
             app.UseAuthorization();
 
-            // Add ExceptionMiddleware
+            // Agregamos el ExceptionMiddleware
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.MapControllers();
 
-            //app.Run();
+            //registramos en el log la información de incio
             try
             {
                 Log.Information("Starting up the application");
