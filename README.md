@@ -10,10 +10,10 @@ La aplicación cuenta con una barra lateral con los botones que permiten cambiar
 La vista de administración de biblioteca presenta los siguientes controles:
 1.- Un botón para agregar un nuevo libro.
 2.- Un listado de los libros precargados en la base de datos, a su vez, cada libro presenta 4 botones. 
-      Modificar un libro
-      Eliminar un libro
-      Prestar un libro 
-      Devolver un libro
+      Modificar un libro,
+      Eliminar un libro,
+      Prestar un libro ,
+      Devolver un libro.
 3.- Un usuario que no ha iniciado sesión solo puede ver el botón devolver un libro.
 4.- Un usuario que ha iniciado sesión puede ver todos los botones
 
