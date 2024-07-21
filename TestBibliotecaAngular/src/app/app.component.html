@@ -1,9 +1,25 @@
-<div class="row">
-  <div class="col-sm-12 col-md-2 col-lg-2">
-    <!-- agregaos la barra lateral -->
+<div class="page">
+  <div class="sidebar">
     <app-shared-sidebar></app-shared-sidebar>
   </div>
-  <div class="col-sm-12 col-md-10 col-lg-10">
-    <router-outlet></router-outlet>
-  </div>
+  <main>
+    <div class="top-row px-4">
+        <!-- <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a> -->
+    </div>
+
+    <article class="content px-4">
+      <router-outlet></router-outlet>
+    </article>
+  </main>
 </div>
+
+
+
+  <!-- <div class="col-sm-12 col-md-2 col-lg-2"> -->
+    <!-- agregaos la barra lateral -->
+  <!-- </div> -->
+  <!-- <div class="col-sm-12 col-md-10 col-lg-10">
+    <router-outlet></router-outlet>
+  </div> -->
+
+

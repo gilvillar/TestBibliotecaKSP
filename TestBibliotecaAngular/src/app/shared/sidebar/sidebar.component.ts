@@ -9,12 +9,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sidebar.component.css'
 })
 export class SharedSidebarComponent {
+  collapseNavMenu: boolean = true;
 
   constructor(
     private authService: AuthApiService, //inyectamos el servicio de autorizacion
     private router: Router,
   ){
 
+  }
+
+  //metodo que determina si el menu se colapsa o no
+  ToggleNavMenu():void {
+      this.collapseNavMenu = !this.collapseNavMenu;
   }
 
   //metodo que cierra la sesión
