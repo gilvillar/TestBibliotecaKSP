@@ -11,6 +11,7 @@ namespace Test.BLL
 {
     /// <summary>
     /// Esta clase representa la logica de negocio de la autenticacion de usuarios.
+    /// este es un comentario de prueba para el ejercicio de git
     /// </summary>
     public class AuthService : IUserService
     {
